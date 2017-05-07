@@ -57,5 +57,38 @@ npm i -D webpack@2.2.0
 ```
 $ webpack ./src/app.js ./dist/app/bundle.js
 $ webpack ./src/app.js ./dist/app/bundle.js -p
+$ webpack ./src/app.js ./dist/app/bundle.js -p --watch
 ```
-_p = production - zminifikowane_
+_ -p = production - zminifikowane_
+_ -w = watch_
+
+##### Plik konfiguracyjny webpack:
+*webpack.coonfig.js*
+```
+module.exports = {
+	entry: './src/app.js',
+	output: {
+		filename: './dist/app.bundle.js'
+	}
+}
+```
+
+##### Npm komendy
+W pliku *package.json* można tworzyć komendy:
+
+```
+  ...
+
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "prod": "webpack -p"
+  },
+  ...
+
+```
+_ -d = development _
+wywołanie powyższej komendy:
+```
+npm run dev
+npm run prod
+```
