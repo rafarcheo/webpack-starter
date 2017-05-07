@@ -86,7 +86,7 @@ W pliku *package.json* można tworzyć komendy:
   ...
 
 ```
-_ -d = development _
+_-d = development_
 wywołanie powyższej komendy:
 ```
 npm run dev
