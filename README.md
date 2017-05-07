@@ -32,4 +32,4 @@ Instalacja weback w projojekcie npm:
 $ npm i -D webpack
 ```
 > * i = install
-* D = --save-dev 
+> * D = --save-dev 
