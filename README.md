@@ -92,3 +92,32 @@ wywołanie powyższej komendy:
 npm run dev
 npm run prod
 ```
+### Webpack Plugin
+Generowanie pliku html z templatu .ejs - z załączonym plikiem js 
+ _ (Link do pluginu)[https://github.com/jantimon/html-webpack-plugin]_
+ 1. Installation:
+ ```
+ npm i html-webpack-plugin --save-dev
+ ```
+ 2. W pliku webpack.config.js dodajemy:
+ ```
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Custom template',
+      template: __dirname + '/src/index.ejs', // Load a custom template (ejs by default see the FAQ for details)
+    })
+  ]
+ ```
+ 3. Tworzymy template - plik src/index.ejs:
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+  <div>Page content goes hire..</div>
+  </body>
+</html>
+```
