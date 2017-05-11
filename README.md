@@ -94,7 +94,7 @@ npm run prod
 ```
 ### Webpack Plugin
 Generowanie pliku html z templatu .ejs - z załączonym plikiem js 
- _ (Link do pluginu)[https://github.com/jantimon/html-webpack-plugin]_
+ _ [Link do pluginu - html-webpack-plugin ](https://github.com/jantimon/html-webpack-plugin}_
  1. Installation:
  ```
  npm i html-webpack-plugin --save-dev
@@ -120,4 +120,40 @@ Generowanie pliku html z templatu .ejs - z załączonym plikiem js
   <div>Page content goes hire..</div>
   </body>
 </html>
+```
+
+### Loaders
+_Podpięcie css do naszego pliku index.html_
+```
+_umożliwia załączenie css do poliku html_  
+npm install css-loader --save-dev  
+_wkleja css jako css do header - w tag style_   
+npm install style-loader --sve-dev  
+_scss_
+npm install sass-loader node-sass --save-dev
+```
+Tworzymy plik css: *src/app.css*   go importujemy w pliku app.js 
+```
+const css = require('./app.scss');
+```
+
+W pliku webpack.config.js dodajemy objekt module:
+```
+module: {
+  rules: [
+  {test: /\.css$/, use: 'css-loader'}
+  ]
+}
+_dla wielu loaderów - są wczytywane od ostatniego:_
+module: {
+  rules: [
+  {test: /\.css$/, use: ['style-loader','css-loader']}
+  ]
+}
+_scss_
+module: {
+  rules: [
+  {test: /\.scss$/, use: ['style-loader','css-loader','sass-loader']}
+  ]
+}
 ```
