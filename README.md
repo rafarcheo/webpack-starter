@@ -157,3 +157,59 @@ module: {
   ]
 }
 ```
+### Zapis do osobnego pliku wynikowych css'ów
+Instalacja:
+```
+npm install --save-dev extract-text-webpack-plugin
+```
+[webpack extract text plugin](https://www.npmjs.com/package/extract-text-webpack-plugin-webpack-2)
+
+# W pliku webpack.config.js dodajemy
+```
+  module: {
+    rules: [
+      {
+        use:  ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          loader: ['css-loader','sass-loader'],
+          publicPath:  __dirname +'/dist'
+        })
+      }
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin('app.css')
+  ]
+```
+
+### Serwer:
+
+instalacja:
+```
+npm i webpack-dev-server -D
+```
+
+package.json 
+```
+    ...
+  "scripts": {
+    "dev": "webpack-dev-server",
+    ...
+```
+
+webpack.config.js: 
+
+```
+var path = require("path");
+
+  output: {
+    path: path.resolve(__dirname +'/dist'),
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "dist"), // inaczej plii dist beda tylko w pamieci - nie zapisywane na dysk
+    compress: true,
+    port: 9000,
+    stats: "errors-only", // mniej info w konsoli
+    open: true // otwiera okno po kompilacji
+  },
+```

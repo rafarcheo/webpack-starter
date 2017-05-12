@@ -4,18 +4,22 @@
   "description": "webpack project starter",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack -d --watch",
+    "dev": "webpack-dev-server",
+    "dev-no-swever": "webpack -d --watch",
     "prod": "webpack -p"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "extract-text-webpack-plugin-webpack-2": "^1.0.1",
     "html-webpack-plugin": "^2.28.0",
     "node-loader": "^0.6.0",
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.17.0",
-    "webpack": "^2.5.0"
+    "webpack": "^2.5.0",
+    "webpack-dev-server": "^2.4.5"
   }
 }
