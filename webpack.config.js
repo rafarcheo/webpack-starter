@@ -17,6 +17,11 @@ module.exports = {
 					loader: ['css-loader','sass-loader'],
 					publicPath:  __dirname +'/dist'
 				})
+			},
+			{
+				test: /\.js$/,
+				 exclude: /node_modules/,
+				  loader: "babel-loader" 
 			}
 		]
 	},
@@ -34,6 +39,7 @@ module.exports = {
 			// 	collapseWhitespace: true
 			// },
 			hash: true,
+			// filename: '/index.html',
 			template: __dirname + '/src/index.ejs', // Load a custom template (ejs by default see the FAQ for details)
 		}),
 		new ExtractTextPlugin('app.css')

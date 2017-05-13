@@ -213,3 +213,50 @@ var path = require("path");
     open: true // otwiera okno po kompilacji
   },
 ```
+
+### React
+1. [quick app - install and it's work](https://github.com/facebookincubator/create-react-app)
+2. instalacja samodzielna:
+```
+npm i -D react react-dom
+```
+babel
+```
+npm i -D babel babel-preset-react babel-preset-es2015
+```
+
+app.js :
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+  <h1>Hello, world!</h1>,
+  document.getElementById('root')
+);
+```
+index.ejs
+```
+<div id="root">
+```
+.bablerc
+```
+{
+  "presets": ["es2015", "react"]
+}
+```
+
+loader install
+```
+npm install --save-dev babel-loader babel-core
+```
+
+webpack.config.js 
+```
+  {
+    test: /\.js$/,
+     exclude: /node_modules/,
+      loader: "babel-loader" 
+  }
+```        
+### Multiple templates options
