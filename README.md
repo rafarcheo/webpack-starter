@@ -260,3 +260,114 @@ webpack.config.js
   }
 ```        
 ### Multiple templates options
+1. Clear dist folder before compile
+```
+npm i -D rimraf
+``` 
+add comand to package.json
+```
+  "scripts": {
+    "dev": "npm run clean && webpack-dev-server",
+    "clean": "rimraf ./dist/*"
+  },
+```
+
+### PUG - temlate for node
+```
+npm install -D pug pug-html-loader
+```
+webpack,config.js
+```
+  # module rules:
+  {
+    test: /\.pug$/,
+    use: 'pug-html-loader'
+  }
+
+  # plugins:    
+    new HtmlWebpackPlugin({
+      title: 'Contact template from pug',
+      cache: false,
+      hash: true,
+      filename: 'page.html',
+      template: __dirname + '/src/page.pug', // Load a custom template (ejs by default see the FAQ for details)
+    })
+```      
+pliki
+```
+src
+  \page.pug
+```
+
+### Mulit js bundle
+webpack.config.js
+```
+  ...
+  # one file
+  entry: './src/app.js',
+  output: {
+    path: path.resolve(__dirname +'/dist'),
+    filename: 'app.bundle.js'
+  },
+
+
+  # more files
+  entry: {
+    app: './src/app.js',
+    page: './src/page.js'
+  },
+  output: {
+    path: path.resolve(__dirname +'/dist'),
+    filename: '[name].bundle.js'
+  },
+
+  ...
+
+  # plugins
+
+    new HtmlWebpackPlugin({
+      title: 'Contact from file html',
+      cache: false,
+      hash: true,
+      excludeChunks: ['page'],
+      chunks: ['page'],
+      filename: 'contact.html',
+      template: __dirname + '/src/contact.html'
+    }),
+
+### hot mode replacement css
+
+webpack.config.js
+```
+  var webpack = require('webpack');
+  ...
+
+  devServer: {
+    ...
+    hot: true,
+    ...
+  }
+  ...
+  module: {
+    rules: [
+      {
+        test: /\.scss$/, 
+        use: ['style-loader','css-loader','sass-loader'],
+      }
+    ]
+  }
+  ...
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // enable HMR globally
+
+    new webpack.NamedModulesPlugin(),
+    // prints more readable module names in the browser console on HMR updates
+  ],
+
+```
+app.js:
+```
+import css from './app.scss'
+```

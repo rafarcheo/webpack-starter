@@ -1,48 +1,75 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require('webpack');
 var path = require("path");
 
+
 module.exports = {
-	entry: './src/app.js',
+	entry: {
+		app: './src/app.js',
+		page: './src/page.js'
+	},
 	output: {
 		path: path.resolve(__dirname +'/dist'),
-		filename: 'app.bundle.js'
+		filename: '[name].bundle.js'
 	},
 	module: {
 		rules: [
 			{
 				test: /\.scss$/, 
-				use:  ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					loader: ['css-loader','sass-loader'],
-					publicPath:  __dirname +'/dist'
-				})
+				use: ['style-loader','css-loader','sass-loader'],
+				// use:  ExtractTextPlugin.extract({
+				// 	fallback: 'style-loader',
+				// 	loader: ['css-loader','sass-loader'],
+				// 	publicPath:  __dirname +'/dist'
+				// })
 			},
 			{
 				test: /\.js$/,
-				 exclude: /node_modules/,
-				  loader: "babel-loader" 
-			}
+				exclude: /node_modules/,
+				use: "babel-loader" 
+			},
+			// {
+			// 	test: /\.pug$/,
+			// 	use: 'pug-html-loader'
+			// }
 		]
 	},
 	devServer: {
 		contentBase: path.join(__dirname, "dist"),
 		compress: true,
 		port: 9000,
+		hot: true,
 		stats: "errors-only",
 		open: true
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: 'Custom template',
-			// minify: {
-			// 	collapseWhitespace: true
-			// },
+			title: 'Custom from template ejs',
+			cache: false,
+			minify: {
+				collapseWhitespace: true
+			},
+			excludeChunks: ['page'],
 			hash: true,
-			// filename: '/index.html',
+	//		filename: 'a.html',
 			template: __dirname + '/src/index.ejs', // Load a custom template (ejs by default see the FAQ for details)
 		}),
-		new ExtractTextPlugin('app.css')
+		new HtmlWebpackPlugin({
+			title: 'Contact from file html',
+			cache: false,
+			hash: true,
+			excludeChunks: ['page'],
+			filename: 'contact.html',
+			template: __dirname + '/src/contact.html', // Load a custom template (ejs by default see the FAQ for details)
+		}),
+		// new HtmlWebpackPlugin({
+		// 	chunks: ['page'],
+		// 	template: __dirname + '/src/page.pug', // Load a custom template (ejs by default see the FAQ for details)
+		// }),
+//		new ExtractTextPlugin('app.css'),
+	    new webpack.HotModuleReplacementPlugin(),
+	    new webpack.NamedModulesPlugin()
 	]
 }
 

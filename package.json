@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "dev-no-swever": "webpack -d --watch",
-    "prod": "webpack -p"
+    "prod": "webpack -p",
+    "clean": "rimraf ./dist/*"
   },
   "author": "",
   "license": "ISC",
@@ -22,8 +23,11 @@
     "html-webpack-plugin": "^2.28.0",
     "node-loader": "^0.6.0",
     "node-sass": "^4.5.2",
+    "pug": "^2.0.0-rc.1",
+    "pug-html-loader": "^1.1.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "rimraf": "^2.6.1",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.0",
