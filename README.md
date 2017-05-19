@@ -371,3 +371,44 @@ app.js:
 ```
 import css from './app.scss'
 ```
+
+Kompilacja scss na podzielona na produkcujną (do osobnego pliku scss) i developerską (geerowane do head pliku html - by Hot Module Replacement)
+```
+  # package.json
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "dev-no-swever": "webpack -d --watch",
+    "prod": "npm run clean && NODE_ENV='production' webpack -p",
+    "prod-windows": "npm run clean && SET NODE_ENV=development && webpack -p",
+    "clean": "rimraf ./dist/*"
+  },
+```
+
+```
+# webpack.config.js
+
+var isProd = process.env.NODE_ENV === 'production';  // true | false
+var cssDev = ['style-loader','css-loader','sass-loader'];
+var cssProd = ExtractTextPlugin.extract({
+  fallback: 'style-loader',
+  loader: ['css-loader','sass-loader'],
+  publicPath:  __dirname +'/dist'
+});
+cssConfig = isProd ? cssProd : cssDev;
+
+
+  rules: [
+      {
+        test: /\.scss$/, 
+        use: cssConfig
+      }
+    ]
+    ...
+    plugins: [
+      new ExtractTextPlugin({
+        filename:'app.css',
+        disable: !isProd,
+        allChunks: true
+      })
+    ]
+```

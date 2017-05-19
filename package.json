@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "dev-no-swever": "webpack -d --watch",
-    "prod": "webpack -p",
+    "prod": "npm run clean && NODE_ENV='production' webpack -p",
+    "prod-windows": "npm run clean && SET NODE_ENV=development && webpack -p",
     "clean": "rimraf ./dist/*"
   },
   "author": "",
