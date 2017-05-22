@@ -38,10 +38,14 @@ module.exports = {
 				exclude: /node_modules/,
 				use: "babel-loader" 
 			},
-			// {
-			// 	test: /\.pug$/,
-			// 	use: 'pug-html-loader'
-			// }
+			{
+				test: /\.(jpg|svg|png)$/,
+				use: "file-loader" 
+			},
+			{
+				test: /\.pug/,
+				use: ['html-loader', 'pug-html-loader']
+			}
 		]
 	},
 	devServer: {
@@ -72,10 +76,11 @@ module.exports = {
 			filename: 'contact.html',
 			template: __dirname + '/src/contact.html', // Load a custom template (ejs by default see the FAQ for details)
 		}),
-		// new HtmlWebpackPlugin({
-		// 	chunks: ['page'],
-		// 	template: __dirname + '/src/page.pug', // Load a custom template (ejs by default see the FAQ for details)
-		// }),
+		new HtmlWebpackPlugin({
+			chunks: ['page'],
+			filename: 'page.html',
+			template: __dirname + '/src/page.pug', // Load a custom template (ejs by default see the FAQ for details)
+		}),
 		new ExtractTextPlugin({
 			filename:'app.css',
 			disable: !isProd,

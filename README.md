@@ -280,18 +280,16 @@ webpack,config.js
 ```
   # module rules:
   {
-    test: /\.pug$/,
-    use: 'pug-html-loader'
+    test: /\.pug/,
+    use: ['html-loader', 'pug-html-loader']
   }
 
   # plugins:    
     new HtmlWebpackPlugin({
-      title: 'Contact template from pug',
-      cache: false,
-      hash: true,
+      chunks: ['page'],
       filename: 'page.html',
       template: __dirname + '/src/page.pug', // Load a custom template (ejs by default see the FAQ for details)
-    })
+    }),
 ```      
 pliki
 ```
@@ -411,4 +409,18 @@ cssConfig = isProd ? cssProd : cssDev;
         allChunks: true
       })
     ]
+```
+
+### Images in css
+
+Scan css to find 
+```
+npm i -D file-loader
+```
+webpack.config.js
+```
+{
+  test: /\.jpg$/,
+  use: "file-loader" 
+}
 ```
