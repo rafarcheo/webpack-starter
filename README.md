@@ -404,7 +404,7 @@ cssConfig = isProd ? cssProd : cssDev;
     ...
     plugins: [
       new ExtractTextPlugin({
-        filename:'app.css',
+        filename:'app.css', // albo filename:'/css/[name].css',
         disable: !isProd,
         allChunks: true
       })
@@ -412,15 +412,78 @@ cssConfig = isProd ? cssProd : cssDev;
 ```
 
 ### Images in css
-
+zdjęcie
+src
+  \images
+        \a.jpg
+zostanie obrobione i przeniesione do w dist/images/a.jpg        
 Scan css to find 
 ```
 npm i -D file-loader
 ```
 webpack.config.js
 ```
-{
-  test: /\.jpg$/,
-  use: "file-loader" 
-}
+  {
+    test: /\.(jpe?g|svg|png|gif)$/,
+    use: "file-loader?name=[name].[ext]&outputPath=images/" // files save orginal name save
+    // use: "file-loader" // random name
+    // use: "file-loader?name=[hash:12].[ext]&Path=images/" 
+  },
 ```
+
+##### Optimalize images
+```
+npm i -D image-webpack-loader
+
+webpack.config.js
+
+
+  {
+    test: /\.(jpe?g|svg|png|gif)$/,
+    use: ["file-loader?name=[name].[ext]&outputPath=images/&publicPath=images/", "image-webpack-loader"]
+  }
+```
+
+### Bootstrap in react
+npm i bootstrap-loader -D
+npm i resolve-url-loader url-loader -D
+
+Bootstrap install:
+https://github.com/shakacode/bootstrap-loader
+
+npm install --save-dev bootstrap-dev bootstrap-sass
+npm install --save-dev css-loader node-sass resolve-url-loader sass-loader style-loader url-loader
+
+by mieć wpływ na to co instalujemy z bootstrap tworzymy plok konfiguracyhny
+.bootstraprc a w nim treść z:
+- https://github.com/shakacode/bootstrap-loader/blob/master/.bootstraprc-3-default (bootstrap 3)
+
+oraz 
+webpack.bootstrap.config.js
+treść z
+https://github.com/shakacode/bootstrap-loader/blob/master/examples/basic/webpack.bootstrap.config.js
+
+A w pliku webpacj.config.js:
+var bootstrapEntryPoints = require("./webpack.bootstrap.config");
+var bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev;
+
+webpack.config
+{ 
+    test: /\.(woff2?|svg)$/, 
+    loader: 'url-loader?limit=10000&name=fonts/[name].[ext]' 
+},
+{ 
+    test: /\.(ttf|eot)$/, 
+    loader: 'file-loader?&name=fonts/[name].[ext]' 
+},
+add jquery
+
+{ 
+  test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, 
+  loader: 'imports-loader?jQuery=jquery' 
+}
+
+npm i -D imports-loader jquery
+
+w plikach js wymagających juery piszemy:
+global.jQuery = require('jquery'); 
